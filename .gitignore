@@ -41,3 +41,7 @@ yarn-error.log*
 next-env.d.ts
 
 /app/generated/prisma
+
+# local AI/session notes (non-project docs)
+CURSOR_PROMPT.md
+*.local.md
