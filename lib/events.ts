@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/db";
+import type { Prisma } from "@prisma/client";
 import type { EventType } from "@/types";
 
 interface EmitEventParams {
@@ -7,7 +8,7 @@ interface EmitEventParams {
   productId?: string;
   cartId?: string;
   orderId?: string;
-  metadata?: Record<string, unknown>;
+  metadata?: Prisma.InputJsonValue;
 }
 
 export async function emitEvent(params: EmitEventParams) {
