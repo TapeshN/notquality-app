@@ -64,7 +64,8 @@ export default function CredentialCard({ account, index, activeBugId }: Props) {
     router.push(`/login?${params.toString()}`);
   }
 
-  // BUG HP-007: Event Pipeline card (index 2) has reduced bottom padding on mobile
+  // BUG HP-001: Flaky Test Lab card has uneven bottom padding in homepage card layout.
+  // BUG HP-007: Event Pipeline card (index 2) has reduced bottom padding on mobile.
   const buggyPadding = activeBugId === "HP-007" && index === 2 ? "pb-2" : "pb-5";
 
   return (
@@ -81,6 +82,7 @@ export default function CredentialCard({ account, index, activeBugId }: Props) {
       <div className="flex items-center gap-2 mb-3">
         <span
           className={`inline-block w-2 h-2 rounded-full ${dotColorMap[color] ?? dotColorMap.slate}`}
+          // BUG HP-003: decorative icon is not hidden from assistive technologies.
           aria-hidden={activeBugId !== "HP-003"}
         />
         <span className="text-xs font-medium text-zinc-400 uppercase tracking-wider">

@@ -48,6 +48,7 @@ export default function ProductsView() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         type: "PRODUCT_SEARCHED",
+        // BUG EVT-007: search analytics category grouping can drift from active filters.
         metadata: { query: searchInput, category: categoryValue },
       }),
     });

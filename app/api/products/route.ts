@@ -21,5 +21,6 @@ export async function GET(req: NextRequest) {
     orderBy: { createdAt: "asc" },
   });
 
+  // BUG API-008: null imageUrl values are returned without schema-level guardrails.
   return NextResponse.json(products);
 }

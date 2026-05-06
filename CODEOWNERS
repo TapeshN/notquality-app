@@ -1,0 +1,20 @@
+# Default ownership
+* @TapeshN
+
+# Pages and UI
+/app/ @TapeshN
+/components/ @TapeshN
+
+# API routes
+/app/api/ @TapeshN
+
+# Bug registry (critical: configure branch protection to require 2 approvals)
+/data/bugs/ @TapeshN @notquality-core/qa-leads
+
+# Prisma schema and migrations
+/prisma/ @TapeshN
+/prisma/schema.prisma @TapeshN
+
+# CI and infra
+/.github/workflows/ @TapeshN
+/prisma.config.ts @TapeshN

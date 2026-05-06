@@ -81,6 +81,7 @@ export default function EventPipelineView() {
       }),
     });
 
+    // BUG EVT-006: metrics can become stale before a user-triggered refresh.
     await refreshAll(filterType);
   }
 

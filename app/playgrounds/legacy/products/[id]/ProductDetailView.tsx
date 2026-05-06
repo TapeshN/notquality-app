@@ -28,6 +28,7 @@ export default function ProductDetailView({ productId }: Props) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           type: "PRODUCT_VIEWED",
+          // BUG EVT-002: PRODUCT_VIEWED events may omit productId in downstream event records.
           productId,
           metadata: { location: "legacy-product-detail" },
         }),

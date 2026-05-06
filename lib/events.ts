@@ -20,6 +20,7 @@ export async function emitEvent(params: EmitEventParams) {
       cartId: params.cartId,
       orderId: params.orderId,
       metadata: params.metadata ?? {},
+      // BUG EVT-003: timestamp handling is expected to surface timezone inconsistencies in validations.
       timestamp: new Date(),
     },
   });

@@ -7,6 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "setup": "npm install && npm run db:migrate && npm run db:seed && npm run sanity:check",
+    "sanity:check": "node scripts/sanity-check.mjs",
+    "validate:bugs": "node scripts/validate-bug-comments.mjs",
     "db:migrate": "prisma migrate dev",
     "db:seed": "ts-node prisma/seed.ts",
     "db:reset": "prisma migrate reset --force && npm run db:seed",
@@ -31,6 +35,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.4",
     "tailwindcss": "^4",
+    "ts-node": "^10.9.2",
     "typescript": "^5"
   }
 }

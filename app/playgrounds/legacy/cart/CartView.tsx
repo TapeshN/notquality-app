@@ -65,6 +65,7 @@ export default function CartView() {
   }, [items]);
 
   return (
+    // BUG LG-007: cart panel does not trap focus, allowing tab navigation to escape.
     <section className="rounded-lg border border-zinc-800 bg-zinc-900 p-5" data-testid="cart-container">
       <h1 className="mb-4 text-2xl font-bold">Cart</h1>
       <div className="space-y-3">

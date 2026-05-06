@@ -5,6 +5,7 @@ import HomepageBugOverlay from "@/components/landing/HomepageBugOverlay";
 
 export default function HomePage() {
   const activeBugId = getRandomHomepageBugId();
+  // BUG HP-005: cards can render in a different first-load order in the homepage grid.
 
   return (
     <main className="min-h-screen bg-zinc-950 text-white">
