@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { getSession } from "@/lib/session";
 import PlaygroundShell from "@/components/playground/PlaygroundShell";
+import EventPipelineView from "./EventPipelineView";
 
 export default async function EventPipelineLabPage() {
   const session = await getSession();
@@ -11,8 +12,11 @@ export default async function EventPipelineLabPage() {
   return (
     <PlaygroundShell playground="event-pipeline">
       <div data-testid="playground-shell">
-        <h1 className="text-2xl font-bold mb-2">Event Pipeline Lab</h1>
-        <p className="text-zinc-400">Coming in Phase 4.</p>
+        <h1 className="mb-2 text-2xl font-bold">Event Pipeline Lab</h1>
+        <p className="mb-6 text-zinc-400">
+          Validate event ingestion, payload shape, and reporting consistency.
+        </p>
+        <EventPipelineView />
       </div>
     </PlaygroundShell>
   );
