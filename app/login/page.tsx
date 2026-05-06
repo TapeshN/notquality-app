@@ -1,22 +1,22 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
     const prefillEmail = searchParams.get("email");
     const prefillPassword = searchParams.get("password");
     if (prefillEmail) setEmail(prefillEmail);
     if (prefillPassword) setPassword(prefillPassword);
-  }, [searchParams]);
+  }, []);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
