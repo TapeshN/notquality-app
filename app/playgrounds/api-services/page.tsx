@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { getSession } from "@/lib/session";
 import PlaygroundShell from "@/components/playground/PlaygroundShell";
 import { getBugsForPlayground } from "@/lib/bugs";
+import ApiRequestViewer from "./ApiRequestViewer";
 
 export default async function ApiServicesLabPage() {
   const session = await getSession();
@@ -44,6 +45,8 @@ export default async function ApiServicesLabPage() {
             ))}
           </div>
         </section>
+
+        <ApiRequestViewer />
 
         <section>
           <h2 className="text-sm font-medium text-zinc-500 uppercase tracking-widest mb-4">
