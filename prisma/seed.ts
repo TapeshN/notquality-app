@@ -1,6 +1,13 @@
 import { PrismaClient } from "@prisma/client";
-import accounts from "../data/seed/accounts.json";
-import products from "../data/seed/products.json";
+import { readFileSync } from "fs";
+import { fileURLToPath } from "url";
+import { join, dirname } from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const accounts = JSON.parse(readFileSync(join(__dirname, "../data/seed/accounts.json"), "utf-8"));
+const products = JSON.parse(readFileSync(join(__dirname, "../data/seed/products.json"), "utf-8"));
 
 const prisma = new PrismaClient();
 
