@@ -1,0 +1,112 @@
+[
+  {
+    "id": "LG-001",
+    "playground": "legacy",
+    "type": "visual",
+    "description": "Multiple buttons share duplicate text with no distinguishing label",
+    "expectedBehavior": "Each 'Add to Cart' button is uniquely identifiable by product context",
+    "actualBehavior": "Product listing page renders multiple buttons with identical text 'Add' and no aria-label",
+    "severity": "medium",
+    "detectable": true,
+    "testHint": "Assert each add-to-cart button has a unique aria-label containing the product name"
+  },
+  {
+    "id": "LG-002",
+    "playground": "legacy",
+    "type": "state",
+    "description": "Cart count in nav does not update after adding item",
+    "expectedBehavior": "Cart badge increments immediately when item is added",
+    "actualBehavior": "Cart count stays stale until page is refreshed",
+    "severity": "high",
+    "detectable": true,
+    "testHint": "Add item to cart and assert [data-testid='cart-count'] increments without reload"
+  },
+  {
+    "id": "LG-003",
+    "playground": "legacy",
+    "type": "data",
+    "description": "Price displayed differently on listing vs detail page",
+    "expectedBehavior": "Price is consistent between product list and product detail views",
+    "actualBehavior": "Listing shows $29.99, detail page shows $34.99 for the same product",
+    "severity": "high",
+    "detectable": true,
+    "testHint": "Read price from listing page, navigate to detail, assert prices match"
+  },
+  {
+    "id": "LG-004",
+    "playground": "legacy",
+    "type": "accessibility",
+    "description": "Product images missing alt text",
+    "expectedBehavior": "All product images have descriptive alt attributes",
+    "actualBehavior": "Product images render with empty alt='' or missing alt attribute",
+    "severity": "medium",
+    "detectable": true,
+    "testHint": "Assert all img elements within [data-testid='product-card'] have non-empty alt attributes"
+  },
+  {
+    "id": "LG-005",
+    "playground": "legacy",
+    "type": "state",
+    "description": "Filter state not cleared when navigating back to product list",
+    "expectedBehavior": "Filter resets to default when user navigates away and returns",
+    "actualBehavior": "Category filter persists in UI but results are not filtered, causing mismatch",
+    "severity": "medium",
+    "detectable": true,
+    "testHint": "Apply filter, navigate to detail, go back, assert filter UI matches active results"
+  },
+  {
+    "id": "LG-006",
+    "playground": "legacy",
+    "type": "sorting",
+    "description": "Order history table sorts incorrectly by date",
+    "expectedBehavior": "Clicking date column sorts orders chronologically",
+    "actualBehavior": "Orders sort alphabetically by date string instead of chronologically",
+    "severity": "medium",
+    "detectable": true,
+    "testHint": "Click date sort, assert first row has earliest date and last row has latest date"
+  },
+  {
+    "id": "LG-007",
+    "playground": "legacy",
+    "type": "visual",
+    "description": "Cart drawer does not trap focus when open",
+    "expectedBehavior": "Tab key cycles focus within the cart drawer when it is open",
+    "actualBehavior": "Tab key escapes the cart drawer and reaches background content",
+    "severity": "high",
+    "detectable": true,
+    "testHint": "Open cart drawer and assert Tab key does not move focus outside the drawer"
+  },
+  {
+    "id": "LG-008",
+    "playground": "legacy",
+    "type": "analytics",
+    "description": "Success toast fires before backend confirms order",
+    "expectedBehavior": "Order confirmation toast appears only after API returns 201",
+    "actualBehavior": "Toast appears immediately on submit click before API response is received",
+    "severity": "medium",
+    "detectable": true,
+    "testHint": "Intercept POST /api/orders with a delay, assert toast does not appear before response"
+  },
+  {
+    "id": "LG-009",
+    "playground": "legacy",
+    "type": "responsive",
+    "description": "Product grid wraps to single column too early on tablet",
+    "expectedBehavior": "Two-column grid maintained at 768px viewport width",
+    "actualBehavior": "Grid collapses to single column at 800px instead of 768px",
+    "severity": "low",
+    "detectable": true,
+    "testHint": "Set viewport to 780px and assert product grid has two columns"
+  },
+  {
+    "id": "LG-010",
+    "playground": "legacy",
+    "type": "validation",
+    "description": "Cart accepts quantity of 0 without error",
+    "expectedBehavior": "Quantity field rejects values less than 1 with a validation message",
+    "actualBehavior": "Updating quantity to 0 is accepted and item remains in cart with 0 quantity",
+    "severity": "high",
+    "detectable": true,
+    "testHint": "Update cart item quantity to 0 and assert validation error is displayed"
+  }
+]

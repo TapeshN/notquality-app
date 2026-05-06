@@ -1,0 +1,90 @@
+[
+  {
+    "id": "API-001",
+    "playground": "api-services",
+    "type": "data",
+    "description": "Product detail price differs from listing price",
+    "expectedBehavior": "GET /api/products and GET /api/products/:id return the same price for the same product",
+    "actualBehavior": "Listing endpoint returns base price, detail endpoint returns sale price without indication",
+    "severity": "high",
+    "detectable": true,
+    "testHint": "Compare price field in list response vs detail response for the same product ID"
+  },
+  {
+    "id": "API-002",
+    "playground": "api-services",
+    "type": "api",
+    "description": "Inactive products returned in search results",
+    "expectedBehavior": "GET /api/products only returns products where active=true",
+    "actualBehavior": "Inactive products appear in search results and category filters",
+    "severity": "high",
+    "detectable": true,
+    "testHint": "Assert no product in the response has active=false"
+  },
+  {
+    "id": "API-003",
+    "playground": "api-services",
+    "type": "validation",
+    "description": "Cart accepts invalid quantity values",
+    "expectedBehavior": "POST /api/cart/items rejects quantity < 1 with 400",
+    "actualBehavior": "API accepts quantity: 0 and quantity: -5 and returns 200",
+    "severity": "high",
+    "detectable": true,
+    "testHint": "POST to /api/cart/items with quantity: 0 and assert status 400"
+  },
+  {
+    "id": "API-004",
+    "playground": "api-services",
+    "type": "data",
+    "description": "Duplicate cart rows created for the same product",
+    "expectedBehavior": "Adding the same product twice increments quantity on existing cart row",
+    "actualBehavior": "Each add creates a new row, resulting in duplicate cart entries",
+    "severity": "medium",
+    "detectable": true,
+    "testHint": "Add the same product twice and assert cart has one row with quantity 2, not two rows"
+  },
+  {
+    "id": "API-005",
+    "playground": "api-services",
+    "type": "api",
+    "description": "Order endpoint returns 200 on partial failure",
+    "expectedBehavior": "POST /api/orders returns 500 or 422 when order creation partially fails",
+    "actualBehavior": "API returns 200 with success body even when inventory deduction fails",
+    "severity": "high",
+    "detectable": true,
+    "testHint": "Submit order for out-of-stock item and assert status is not 200"
+  },
+  {
+    "id": "API-006",
+    "playground": "api-services",
+    "type": "data",
+    "description": "Inventory can go negative",
+    "expectedBehavior": "Order fails with 422 when requested quantity exceeds inventory",
+    "actualBehavior": "Inventory decrements below 0 and order succeeds",
+    "severity": "high",
+    "detectable": true,
+    "testHint": "Order quantity greater than inventory and assert inventory does not go below 0"
+  },
+  {
+    "id": "API-007",
+    "playground": "api-services",
+    "type": "data",
+    "description": "Category casing inconsistent across endpoints",
+    "expectedBehavior": "Category values use consistent casing (e.g., always lowercase)",
+    "actualBehavior": "GET /api/products returns 'Electronics', filter param requires 'electronics'",
+    "severity": "medium",
+    "detectable": true,
+    "testHint": "Assert category casing in response matches category casing accepted as filter param"
+  },
+  {
+    "id": "API-008",
+    "playground": "api-services",
+    "type": "data",
+    "description": "imageUrl field is null but no null handling in contract",
+    "expectedBehavior": "API schema documents imageUrl as nullable and frontend handles null",
+    "actualBehavior": "imageUrl is null for some products but schema shows it as required string",
+    "severity": "medium",
+    "detectable": true,
+    "testHint": "Assert products with null imageUrl are handled without frontend error"
+  }
+]

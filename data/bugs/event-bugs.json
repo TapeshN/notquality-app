@@ -1,0 +1,79 @@
+[
+  {
+    "id": "EVT-001",
+    "playground": "event-pipeline",
+    "type": "event",
+    "description": "Duplicate cart events inflate conversion metrics",
+    "expectedBehavior": "One ITEM_ADDED_TO_CART event per add action",
+    "actualBehavior": "Adding to cart fires two events, doubling cart add counts in dashboard",
+    "severity": "high",
+    "detectable": true,
+    "testHint": "Add one item to cart and assert exactly one ITEM_ADDED_TO_CART event exists in the events table"
+  },
+  {
+    "id": "EVT-002",
+    "playground": "event-pipeline",
+    "type": "event",
+    "description": "PRODUCT_VIEWED event missing productId",
+    "expectedBehavior": "PRODUCT_VIEWED payload includes productId field",
+    "actualBehavior": "productId is null in PRODUCT_VIEWED events",
+    "severity": "high",
+    "detectable": true,
+    "testHint": "View a product and assert the PRODUCT_VIEWED event in DB has a non-null productId"
+  },
+  {
+    "id": "EVT-003",
+    "playground": "event-pipeline",
+    "type": "data",
+    "description": "Event timestamp stored in wrong timezone",
+    "expectedBehavior": "Timestamps stored and returned in UTC",
+    "actualBehavior": "Timestamps stored in local server timezone without UTC offset",
+    "severity": "medium",
+    "detectable": true,
+    "testHint": "Assert event timestamp ends with 'Z' or '+00:00' indicating UTC"
+  },
+  {
+    "id": "EVT-004",
+    "playground": "event-pipeline",
+    "type": "data",
+    "description": "Price in event payload differs from product table",
+    "expectedBehavior": "priceAtTimeOfAdd matches product.price at time of event",
+    "actualBehavior": "priceAtTimeOfAdd is always the base price, never the sale price",
+    "severity": "medium",
+    "detectable": true,
+    "testHint": "Add a sale-price product to cart and assert event metadata.priceAtTimeOfAdd equals salePrice"
+  },
+  {
+    "id": "EVT-005",
+    "playground": "event-pipeline",
+    "type": "event",
+    "description": "ORDER_SUBMITTED event fires even when order fails",
+    "expectedBehavior": "ORDER_FAILED event fires on failure, ORDER_SUBMITTED fires only on success",
+    "actualBehavior": "ORDER_SUBMITTED event is always emitted regardless of order outcome",
+    "severity": "high",
+    "detectable": true,
+    "testHint": "Trigger a failed order and assert only ORDER_FAILED event exists, not ORDER_SUBMITTED"
+  },
+  {
+    "id": "EVT-006",
+    "playground": "event-pipeline",
+    "type": "event",
+    "description": "Event accepted but aggregation does not update",
+    "expectedBehavior": "Metrics dashboard reflects events within one aggregation cycle",
+    "actualBehavior": "Events persist in DB but dashboard totals do not change until manual refresh",
+    "severity": "medium",
+    "detectable": true,
+    "testHint": "Emit event, wait for aggregation window, assert dashboard metric incremented"
+  },
+  {
+    "id": "EVT-007",
+    "playground": "event-pipeline",
+    "type": "data",
+    "description": "Search events grouped under wrong category",
+    "expectedBehavior": "PRODUCT_SEARCHED events include the correct category from the filter applied",
+    "actualBehavior": "All search events group under category 'all' regardless of active filter",
+    "severity": "medium",
+    "detectable": true,
+    "testHint": "Search with category filter active and assert event metadata.category matches filter value"
+  }
+]

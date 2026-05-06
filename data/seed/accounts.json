@@ -1,0 +1,65 @@
+[
+  {
+    "email": "legacy.user@notquality.com",
+    "password": "Test123!",
+    "playground": "legacy",
+    "label": "Legacy App Lab",
+    "description": "Brittle UI + old admin workflows",
+    "route": "/playgrounds/legacy",
+    "color": "amber"
+  },
+  {
+    "email": "api.user@notquality.com",
+    "password": "Test123!",
+    "playground": "api-services",
+    "label": "API Services Lab",
+    "description": "API contracts + backend validation",
+    "route": "/playgrounds/api-services",
+    "color": "blue"
+  },
+  {
+    "email": "event.user@notquality.com",
+    "password": "Test123!",
+    "playground": "event-pipeline",
+    "label": "Event Pipeline Lab",
+    "description": "Event ingestion + DB and metric validation",
+    "route": "/playgrounds/event-pipeline",
+    "color": "purple"
+  },
+  {
+    "email": "ai.user@notquality.com",
+    "password": "Test123!",
+    "playground": "ai-quality",
+    "label": "AI Quality Lab",
+    "description": "Prompt regression + AI response evaluation",
+    "route": "/playgrounds/ai-quality",
+    "color": "green"
+  },
+  {
+    "email": "flaky.user@notquality.com",
+    "password": "Test123!",
+    "playground": "flaky",
+    "label": "Flaky Test Lab",
+    "description": "Timing issues + nondeterministic failures",
+    "route": "/playgrounds/flaky",
+    "color": "red"
+  },
+  {
+    "email": "a11y.user@notquality.com",
+    "password": "Test123!",
+    "playground": "accessibility",
+    "label": "Accessibility Lab",
+    "description": "Keyboard, labels, contrast, and WCAG checks",
+    "route": "/playgrounds/accessibility",
+    "color": "teal"
+  },
+  {
+    "email": "release.user@notquality.com",
+    "password": "Test123!",
+    "playground": "release-risk",
+    "label": "Release Risk Lab",
+    "description": "Quality signals + release confidence scoring",
+    "route": "/playgrounds/release-risk",
+    "color": "slate"
+  }
+]

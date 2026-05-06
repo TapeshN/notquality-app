@@ -1,0 +1,90 @@
+[
+  {
+    "id": "HP-001",
+    "playground": "homepage",
+    "type": "visual",
+    "description": "One playground card has uneven padding",
+    "expectedBehavior": "All cards have equal padding on all sides",
+    "actualBehavior": "The Flaky Test Lab card has 8px less bottom padding than others",
+    "severity": "low",
+    "detectable": true,
+    "testHint": "Assert computed padding-bottom is equal across all .credential-card elements"
+  },
+  {
+    "id": "HP-002",
+    "playground": "homepage",
+    "type": "copy",
+    "description": "One card uses inconsistent terminology",
+    "expectedBehavior": "All cards use the word 'Playground' in the purpose field",
+    "actualBehavior": "The API Services card says 'Lab Environment' instead of 'Playground'",
+    "severity": "low",
+    "detectable": true,
+    "testHint": "Assert all [data-testid='card-purpose'] elements contain consistent terminology"
+  },
+  {
+    "id": "HP-003",
+    "playground": "homepage",
+    "type": "accessibility",
+    "description": "Decorative icon missing aria-hidden",
+    "expectedBehavior": "Decorative icons have aria-hidden='true'",
+    "actualBehavior": "The hero section icon is announced by screen readers as unlabeled image",
+    "severity": "medium",
+    "detectable": true,
+    "testHint": "Assert decorative SVGs have aria-hidden='true' attribute"
+  },
+  {
+    "id": "HP-004",
+    "playground": "homepage",
+    "type": "analytics",
+    "description": "CTA logs the wrong playground name on click",
+    "expectedBehavior": "Click event fires with correct playground ID in payload",
+    "actualBehavior": "Release Risk Lab card fires event with playground_id: null",
+    "severity": "medium",
+    "detectable": true,
+    "testHint": "Intercept analytics events on card click and assert playground_id matches card data"
+  },
+  {
+    "id": "HP-005",
+    "playground": "homepage",
+    "type": "sorting",
+    "description": "Cards render in wrong order on first load",
+    "expectedBehavior": "Cards render in defined order: Legacy, API, Event, AI, Flaky, A11y, Release",
+    "actualBehavior": "Flaky Test Lab and Accessibility Lab cards are swapped on initial render",
+    "severity": "low",
+    "detectable": true,
+    "testHint": "Assert nth-child order of [data-testid='credential-card'] matches expected sequence"
+  },
+  {
+    "id": "HP-006",
+    "playground": "homepage",
+    "type": "state",
+    "description": "Selected card highlight does not clear on second selection",
+    "expectedBehavior": "Selecting a new card clears the highlight on the previously selected card",
+    "actualBehavior": "Both cards appear highlighted after selecting a second card",
+    "severity": "low",
+    "detectable": true,
+    "testHint": "Click card A, then card B, assert only card B has the selected class"
+  },
+  {
+    "id": "HP-007",
+    "playground": "homepage",
+    "type": "responsive",
+    "description": "One card wraps badly at 375px viewport width",
+    "expectedBehavior": "All cards maintain consistent layout at mobile breakpoints",
+    "actualBehavior": "Event Pipeline Lab card title wraps to three lines at 375px",
+    "severity": "medium",
+    "detectable": true,
+    "testHint": "Resize viewport to 375px and assert no card title exceeds 2 lines"
+  },
+  {
+    "id": "HP-008",
+    "playground": "homepage",
+    "type": "data",
+    "description": "Card purpose text mismatches internal metadata",
+    "expectedBehavior": "Displayed purpose matches the playground's documented purpose in the registry",
+    "actualBehavior": "AI Quality Lab card shows 'Prompt testing and response validation' but metadata says 'AI evaluation and rubric scoring'",
+    "severity": "medium",
+    "detectable": true,
+    "testHint": "Compare [data-testid='card-purpose'] text against bug registry metadata for each playground"
+  }
+]
