@@ -78,6 +78,7 @@ export default function ProductDetailView({ productId }: Props) {
       <p className="mb-4 text-zinc-400" data-testid="detail-rating">
         Rating: {product.rating.toFixed(1)}
       </p>
+      <p className="mb-4 text-zinc-400">Vendor: {product.vendor}</p>
       <button
         onClick={() => void addToCart()}
         className="rounded-md bg-zinc-200 px-3 py-2 text-sm font-medium text-zinc-900 hover:bg-white"

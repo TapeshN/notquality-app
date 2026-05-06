@@ -31,6 +31,11 @@ export default function ProductsView() {
   }
 
   useEffect(() => {
+    const persistedCategory = window.sessionStorage.getItem("legacy-category-filter") ?? "";
+    if (persistedCategory) {
+      setCategoryValue(persistedCategory);
+      // BUG LG-005: filter UI is restored on back-navigation, but results are fetched unfiltered.
+    }
     void fetchProducts("", "");
   }, []);
 
@@ -52,6 +57,7 @@ export default function ProductsView() {
 
   async function handleCategoryChange(nextCategory: string) {
     setCategoryValue(nextCategory);
+    window.sessionStorage.setItem("legacy-category-filter", nextCategory);
     await fetchProducts(searchValue, nextCategory);
   }
 
