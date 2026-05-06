@@ -4,6 +4,14 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import type { PlaygroundAccount } from "@/types";
 
+declare global {
+  interface Window {
+    analytics?: {
+      track: (event: string, payload: object) => void;
+    };
+  }
+}
+
 const colorMap: Record<string, string> = {
   amber: "border-amber-800 hover:border-amber-600",
   blue: "border-blue-800 hover:border-blue-600",
@@ -43,8 +51,8 @@ export default function CredentialCard({ account, index, activeBugId }: Props) {
   function handleLaunch() {
     // BUG HP-004: Release Risk Lab (index 6) logs null playground_id
     const analyticsPlaygroundId = index === 6 ? null : account.playground;
-    if (typeof window !== "undefined" && (window as { analytics?: { track: (e: string, p: object) => void } }).analytics) {
-      (window as { analytics: { track: (e: string, p: object) => void } }).analytics.track("playground_launch", {
+    if (typeof window !== "undefined" && window.analytics) {
+      window.analytics.track("playground_launch", {
         playground_id: analyticsPlaygroundId,
       });
     }
