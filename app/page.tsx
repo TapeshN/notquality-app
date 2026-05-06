@@ -35,7 +35,7 @@ export default function HomePage() {
             Launch Playground
           </a>
           <a
-            href="https://github.com/tapeshnagarwal"
+            href="https://github.com/TapeshN"
             target="_blank"
             rel="noopener noreferrer"
             data-testid="cta-github"
@@ -70,7 +70,7 @@ export default function HomePage() {
       <footer className="border-t border-zinc-800 px-6 py-6 text-center text-xs text-zinc-600">
         notquality.com — built by{" "}
         <a
-          href="https://github.com/tapeshnagarwal"
+          href="https://github.com/TapeshN"
           className="hover:text-zinc-400 transition-colors"
         >
           Tapesh Nagarwal
