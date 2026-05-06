@@ -1,0 +1,79 @@
+[
+  {
+    "id": "PERF-001",
+    "playground": "performance",
+    "type": "visual",
+    "description": "Product images served without optimization causing LCP > 4s",
+    "expectedBehavior": "Largest Contentful Paint under 2.5s",
+    "actualBehavior": "Unoptimized hero images cause LCP of 4-6s on slow 3G",
+    "severity": "high",
+    "detectable": true,
+    "testHint": "Run Lighthouse and assert LCP <= 2500ms"
+  },
+  {
+    "id": "PERF-002",
+    "playground": "performance",
+    "type": "api",
+    "description": "Product list endpoint has artificial 2-3s delay",
+    "expectedBehavior": "GET /api/products responds in under 500ms",
+    "actualBehavior": "Endpoint includes random 2000-3000ms delay simulating a slow database query",
+    "severity": "high",
+    "detectable": true,
+    "testHint": "Assert GET /api/products response time is under 500ms"
+  },
+  {
+    "id": "PERF-003",
+    "playground": "performance",
+    "type": "visual",
+    "description": "Product grid causes Cumulative Layout Shift (CLS) on load",
+    "expectedBehavior": "CLS score under 0.1",
+    "actualBehavior": "Images load without reserved dimensions causing CLS of 0.3-0.5",
+    "severity": "high",
+    "detectable": true,
+    "testHint": "Run Lighthouse and assert CLS <= 0.1"
+  },
+  {
+    "id": "PERF-004",
+    "playground": "performance",
+    "type": "flaky",
+    "description": "Dashboard component creates a setInterval that never clears on unmount",
+    "expectedBehavior": "Component cleanup removes all timers on unmount",
+    "actualBehavior": "Memory leak accumulates with each mount/unmount cycle",
+    "severity": "medium",
+    "detectable": true,
+    "testHint": "Mount and unmount dashboard 10 times and assert heap memory does not grow monotonically"
+  },
+  {
+    "id": "PERF-005",
+    "playground": "performance",
+    "type": "visual",
+    "description": "Below-fold product images are not lazy loaded",
+    "expectedBehavior": "Images outside viewport use loading='lazy'",
+    "actualBehavior": "All product images load eagerly on page mount regardless of scroll position",
+    "severity": "medium",
+    "detectable": true,
+    "testHint": "Assert product images beyond the first viewport row have loading='lazy' attribute"
+  },
+  {
+    "id": "PERF-006",
+    "playground": "performance",
+    "type": "api",
+    "description": "Reports endpoint recalculates all metrics on every request with no caching",
+    "expectedBehavior": "Aggregated metrics are cached and invalidated on new events",
+    "actualBehavior": "Every GET /api/reports runs a full table scan with no cache layer",
+    "severity": "medium",
+    "detectable": true,
+    "testHint": "Assert 10 consecutive GET /api/reports requests complete in under 200ms each"
+  },
+  {
+    "id": "PERF-007",
+    "playground": "performance",
+    "type": "visual",
+    "description": "First Input Delay (FID) caused by large synchronous JS on mount",
+    "expectedBehavior": "Total Blocking Time under 300ms",
+    "actualBehavior": "Synchronous filtering logic blocks the main thread for 400-600ms on initial load",
+    "severity": "high",
+    "detectable": true,
+    "testHint": "Run Lighthouse and assert Total Blocking Time <= 300ms"
+  }
+]

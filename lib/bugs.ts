@@ -2,6 +2,8 @@ import homepageBugs from "@/data/bugs/homepage-bugs.json";
 import legacyBugs from "@/data/bugs/legacy-bugs.json";
 import apiBugs from "@/data/bugs/api-bugs.json";
 import eventBugs from "@/data/bugs/event-bugs.json";
+import mobileBugs from "@/data/bugs/mobile-bugs.json";
+import performanceBugs from "@/data/bugs/performance-bugs.json";
 import type { Bug } from "@/types";
 
 export const BUG_REGISTRY: Record<string, Bug[]> = {
@@ -9,6 +11,8 @@ export const BUG_REGISTRY: Record<string, Bug[]> = {
   legacy: legacyBugs as Bug[],
   "api-services": apiBugs as Bug[],
   "event-pipeline": eventBugs as Bug[],
+  mobile: mobileBugs as Bug[],
+  performance: performanceBugs as Bug[],
 };
 
 export function getBugsForPlayground(playground: string): Bug[] {

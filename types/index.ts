@@ -5,7 +5,9 @@ export type PlaygroundId =
   | "ai-quality"
   | "flaky"
   | "accessibility"
-  | "release-risk";
+  | "release-risk"
+  | "mobile"
+  | "performance";
 
 export interface PlaygroundAccount {
   email: string;

@@ -20,6 +20,8 @@ const colorMap: Record<string, string> = {
   red: "border-red-800 hover:border-red-600",
   teal: "border-teal-800 hover:border-teal-600",
   slate: "border-slate-700 hover:border-slate-500",
+  orange: "border-orange-800 hover:border-orange-600",
+  pink: "border-pink-800 hover:border-pink-600",
 };
 
 const dotColorMap: Record<string, string> = {
@@ -30,6 +32,8 @@ const dotColorMap: Record<string, string> = {
   red: "bg-red-500",
   teal: "bg-teal-500",
   slate: "bg-slate-400",
+  orange: "bg-orange-500",
+  pink: "bg-pink-500",
 };
 
 interface Props {

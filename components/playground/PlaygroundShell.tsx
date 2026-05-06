@@ -8,6 +8,8 @@ const LABELS: Record<PlaygroundId, string> = {
   flaky: "Flaky Test Lab",
   accessibility: "Accessibility Lab",
   "release-risk": "Release Risk Lab",
+  mobile: "Mobile & Responsive Lab",
+  performance: "Performance Lab",
 };
 
 interface Props {

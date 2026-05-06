@@ -1,0 +1,90 @@
+[
+  {
+    "id": "MOB-001",
+    "playground": "mobile",
+    "type": "responsive",
+    "description": "Touch targets on product cards are smaller than 44x44px",
+    "expectedBehavior": "All interactive elements meet WCAG 2.5.5 minimum touch target size of 44x44px",
+    "actualBehavior": "Add to Cart buttons render at 32px height on mobile viewports",
+    "severity": "high",
+    "detectable": true,
+    "testHint": "At 375px viewport, assert all buttons have height >= 44px"
+  },
+  {
+    "id": "MOB-002",
+    "playground": "mobile",
+    "type": "responsive",
+    "description": "Order history table causes horizontal scroll on mobile",
+    "expectedBehavior": "Table adapts to viewport width with no horizontal overflow",
+    "actualBehavior": "Orders table overflows viewport at widths below 480px",
+    "severity": "medium",
+    "detectable": true,
+    "testHint": "At 375px viewport, assert document body has no horizontal scrollbar"
+  },
+  {
+    "id": "MOB-003",
+    "playground": "mobile",
+    "type": "responsive",
+    "description": "Sticky nav covers form input when mobile keyboard opens",
+    "expectedBehavior": "Active input fields remain visible above keyboard",
+    "actualBehavior": "Search input is hidden behind fixed nav when keyboard opens on iOS Safari",
+    "severity": "high",
+    "detectable": true,
+    "testHint": "Focus search input at 375px and assert input is within visible viewport"
+  },
+  {
+    "id": "MOB-004",
+    "playground": "mobile",
+    "type": "responsive",
+    "description": "Product images overflow their container at 320px",
+    "expectedBehavior": "Images scale within card boundaries at all viewport sizes",
+    "actualBehavior": "Images exceed card width at 320px viewport causing layout break",
+    "severity": "medium",
+    "detectable": true,
+    "testHint": "At 320px viewport, assert all product images have width <= parent container width"
+  },
+  {
+    "id": "MOB-005",
+    "playground": "mobile",
+    "type": "responsive",
+    "description": "Modal cannot be dismissed on small screens — close button scrolls out of view",
+    "expectedBehavior": "Modal close button is always accessible regardless of viewport height",
+    "actualBehavior": "Close button is off-screen on devices with viewport height under 600px",
+    "severity": "high",
+    "detectable": true,
+    "testHint": "Open modal at 375x600 viewport and assert close button is within visible bounds"
+  },
+  {
+    "id": "MOB-006",
+    "playground": "mobile",
+    "type": "responsive",
+    "description": "Font size below 16px on input fields triggers iOS zoom",
+    "expectedBehavior": "Input fields use font-size >= 16px to prevent auto-zoom on iOS",
+    "actualBehavior": "Search and quantity inputs use font-size: 14px causing iOS to zoom on focus",
+    "severity": "medium",
+    "detectable": true,
+    "testHint": "Assert all input elements have computed font-size >= 16px"
+  },
+  {
+    "id": "MOB-007",
+    "playground": "mobile",
+    "type": "responsive",
+    "description": "Cart quantity stepper buttons too close together for touch",
+    "expectedBehavior": "Increment and decrement buttons have adequate spacing for touch input",
+    "actualBehavior": "Plus and minus buttons are 4px apart, causing frequent mis-taps on mobile",
+    "severity": "medium",
+    "detectable": true,
+    "testHint": "Assert gap between quantity stepper buttons is >= 8px at 375px viewport"
+  },
+  {
+    "id": "MOB-008",
+    "playground": "mobile",
+    "type": "visual",
+    "description": "Hero section text overflows on 320px viewport",
+    "expectedBehavior": "All text wraps cleanly with no overflow at any supported viewport",
+    "actualBehavior": "Hero headline clips at the right edge on 320px wide screens",
+    "severity": "low",
+    "detectable": true,
+    "testHint": "At 320px viewport, assert hero heading has no text clipping or overflow: hidden cutoff"
+  }
+]

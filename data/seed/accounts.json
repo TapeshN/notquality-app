@@ -61,5 +61,23 @@
     "description": "Quality signals + release confidence scoring",
     "route": "/playgrounds/release-risk",
     "color": "slate"
+  },
+  {
+    "email": "mobile.user@notquality.com",
+    "password": "Test123!",
+    "playground": "mobile",
+    "label": "Mobile & Responsive Lab",
+    "description": "Viewport bugs, touch targets, and responsive layout failures",
+    "route": "/playgrounds/mobile",
+    "color": "orange"
+  },
+  {
+    "email": "perf.user@notquality.com",
+    "password": "Test123!",
+    "playground": "performance",
+    "label": "Performance Lab",
+    "description": "Core Web Vitals, slow endpoints, layout shift, and memory leaks",
+    "route": "/playgrounds/performance",
+    "color": "pink"
   }
 ]
