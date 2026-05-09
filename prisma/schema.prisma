@@ -106,6 +106,58 @@ model Metric {
   updatedAt DateTime @updatedAt
 }
 
+model PlatformUser {
+  id        String   @id @default(cuid())
+  githubId  String?  @unique
+  email     String   @unique
+  username  String   @unique
+  avatarUrl String?
+  createdAt DateTime @default(now())
+
+  attempts ChallengeAttempt[]
+}
+
+model Challenge {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  description String
+  playground  String
+  bugIds      String[]
+  difficulty  String
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  attempts ChallengeAttempt[]
+}
+
+model ChallengeAttempt {
+  id          String    @id @default(cuid())
+  challengeId String
+  userId      String?
+  score       Float?
+  completed   Boolean   @default(false)
+  startedAt   DateTime  @default(now())
+  submittedAt DateTime?
+
+  challenge   Challenge       @relation(fields: [challengeId], references: [id])
+  user        PlatformUser?   @relation(fields: [userId], references: [id])
+  submissions BugSubmission[]
+}
+
+model BugSubmission {
+  id           String   @id @default(cuid())
+  attemptId    String
+  description  String
+  steps        String
+  severity     String
+  matchedBugId String?
+  score        Float    @default(0)
+  createdAt    DateTime @default(now())
+
+  attempt ChallengeAttempt @relation(fields: [attemptId], references: [id])
+}
+
 enum OrderStatus {
   PENDING
   CONFIRMED

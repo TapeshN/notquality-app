@@ -63,6 +63,22 @@ async function main() {
     });
   }
 
+  console.log("Seeding challenges...");
+  await prisma.challenge.upsert({
+    where: { slug: "legacy-bug-hunt-1" },
+    update: {},
+    create: {
+      slug: "legacy-bug-hunt-1",
+      title: "Legacy Shop: Product Listing Bugs",
+      description:
+        "The NotQuality Shop product listing page has several quality issues. Use the Legacy App Lab to find and report as many bugs as you can. You have access to the full shopping flow: product list, detail pages, cart, and orders.",
+      playground: "legacy",
+      bugIds: ["LG-001", "LG-002", "LG-003", "LG-004", "LG-005"],
+      difficulty: "beginner",
+      active: true,
+    },
+  });
+
   console.log("Seed complete.");
 }
 
