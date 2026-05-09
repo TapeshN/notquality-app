@@ -2,16 +2,21 @@ import NextAuth from "next-auth";
 import GitHub from "next-auth/providers/github";
 import { prisma } from "@/lib/db";
 
+const isProd = process.env.NODE_ENV === "production";
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
   trustHost: true,
   secret: process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET,
+  // Avoid __Secure- / Secure cookies on http://localhost (fixes JWE check cookies not round-tripping).
+  useSecureCookies: isProd,
   providers: [
     GitHub({
       clientId: process.env.GITHUB_CLIENT_ID!,
       clientSecret: process.env.GITHUB_CLIENT_SECRET!,
-      // PKCE cookies can fail to round-trip locally (decode errors in logs). GitHub OAuth
-      // apps support plain authorization_code + client_secret without PKCE.
-      checks: ["state"],
+      // Encrypted state/PKCE cookies often fail to decode in local dev (Turbopack / host / cookie edge cases).
+      // GitHub OAuth apps with a client secret can use authorization_code without these checks.
+      // Production keeps `state` for CSRF protection.
+      checks: isProd ? ["state"] : [],
     }),
   ],
   callbacks: {
