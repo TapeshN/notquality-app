@@ -14,9 +14,24 @@ export default async function ChallengesPage() {
       <h1 className="text-3xl font-bold mb-2" data-testid="challenges-heading">
         Challenges
       </h1>
-      <p className="text-zinc-400 mb-10">
+      <p className="text-zinc-400 mb-6">
         Practice real-world QA skills against a live, intentionally broken
         system.
+      </p>
+      <p className="text-sm text-zinc-500 mb-10">
+        <a
+          href="/api/auth/signin/github"
+          className="text-blue-400 underline hover:text-blue-300"
+          data-testid="sign-in-github"
+        >
+          Sign in with GitHub
+        </a>{" "}
+        (needed to attach attempts to your account). After authorizing, GitHub
+        sends you to{" "}
+        <code className="text-zinc-400">
+          /api/auth/callback/github
+        </code>{" "}
+        automatically — do not open that URL directly.
       </p>
       <div className="space-y-4" data-testid="challenge-list">
         {challenges.map((challenge) => (
