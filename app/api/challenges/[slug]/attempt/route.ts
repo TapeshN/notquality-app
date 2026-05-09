@@ -35,14 +35,19 @@ export async function POST(
         create: submissions.map(
           (
             sub: { description: string; steps: string; severity: string },
-            i: number
-          ) => ({
-            description: sub.description,
-            steps: sub.steps,
-            severity: sub.severity,
-            matchedBugId: result.matches[i]?.matched ? result.matches[i].bugId : null,
-            score: result.matches[i]?.score ?? 0,
-          })
+            idx: number
+          ) => {
+            const matchedBug = result.matches.find(
+              (m) => m.matchedSubmissionIndex === idx
+            );
+            return {
+              description: sub.description,
+              steps: sub.steps,
+              severity: sub.severity,
+              matchedBugId: matchedBug?.bugId ?? null,
+              score: matchedBug?.score ?? 0,
+            };
+          }
         ),
       },
     },

@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/db";
 import Link from "next/link";
+import { SignInButton } from "@/components/auth/SignInButton";
 
 export const dynamic = "force-dynamic";
 
@@ -18,19 +19,9 @@ export default async function ChallengesPage() {
         Practice real-world QA skills against a live, intentionally broken
         system.
       </p>
-      <p className="text-sm text-zinc-500 mb-10">
-        <a
-          href="/api/auth/signin?callbackUrl=/challenges"
-          className="text-blue-400 underline hover:text-blue-300"
-          data-testid="sign-in-github"
-        >
-          Sign in with GitHub
-        </a>{" "}
-        (opens the Auth.js sign-in page — choose GitHub there;
-        GET <code className="text-zinc-400">/api/auth/signin/github</code> is
-        not supported). After authorizing, you return via{" "}
-        <code className="text-zinc-400">/api/auth/callback/github</code>.
-      </p>
+      <div className="mb-10">
+        <SignInButton />
+      </div>
       <div className="space-y-4" data-testid="challenge-list">
         {challenges.map((challenge) => (
           <Link
