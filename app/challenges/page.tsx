@@ -20,18 +20,16 @@ export default async function ChallengesPage() {
       </p>
       <p className="text-sm text-zinc-500 mb-10">
         <a
-          href="/api/auth/signin/github"
+          href="/api/auth/signin?callbackUrl=/challenges"
           className="text-blue-400 underline hover:text-blue-300"
           data-testid="sign-in-github"
         >
           Sign in with GitHub
         </a>{" "}
-        (needed to attach attempts to your account). After authorizing, GitHub
-        sends you to{" "}
-        <code className="text-zinc-400">
-          /api/auth/callback/github
-        </code>{" "}
-        automatically — do not open that URL directly.
+        (opens the Auth.js sign-in page — choose GitHub there;
+        GET <code className="text-zinc-400">/api/auth/signin/github</code> is
+        not supported). After authorizing, you return via{" "}
+        <code className="text-zinc-400">/api/auth/callback/github</code>.
       </p>
       <div className="space-y-4" data-testid="challenge-list">
         {challenges.map((challenge) => (
