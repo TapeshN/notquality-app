@@ -23,7 +23,13 @@ export async function POST() {
     return NextResponse.json({ error: "Cart is empty" }, { status: 400 });
   }
 
-  const total = cart.items.reduce(
+  interface CartLine {
+    productId: string;
+    quantity: number;
+    priceAtAdd: number;
+  }
+  const lines = cart.items as CartLine[];
+  const total = lines.reduce<number>(
     (sum, item) => sum + item.priceAtAdd * item.quantity,
     0
   );
@@ -35,7 +41,7 @@ export async function POST() {
       status: "CONFIRMED",
       total,
       items: {
-        create: cart.items.map((item) => ({
+        create: lines.map((item) => ({
           productId: item.productId,
           quantity: item.quantity,
           price: item.priceAtAdd,
@@ -50,11 +56,11 @@ export async function POST() {
     userId: user.id,
     type: "ORDER_SUBMITTED",
     orderId: order.id,
-    metadata: { total, itemCount: cart.items.length },
+    metadata: { total, itemCount: lines.length },
   });
 
   // BUG API-006: inventory not checked — can go negative
-  for (const item of cart.items) {
+  for (const item of lines) {
     await prisma.product.update({
       where: { id: item.productId },
       data: { inventory: { decrement: item.quantity } },

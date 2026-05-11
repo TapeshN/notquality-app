@@ -1,3 +1,4 @@
+import type { Challenge } from "@prisma/client";
 import { prisma } from "@/lib/db";
 import Link from "next/link";
 import AuthButton from "@/components/auth/AuthButton";
@@ -5,7 +6,7 @@ import AuthButton from "@/components/auth/AuthButton";
 export const dynamic = "force-dynamic";
 
 export default async function ChallengesPage() {
-  const challenges = await prisma.challenge.findMany({
+  const challenges: Challenge[] = await prisma.challenge.findMany({
     where: { active: true },
     orderBy: { createdAt: "asc" },
   });
