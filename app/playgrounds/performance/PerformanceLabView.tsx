@@ -2,6 +2,14 @@
 
 import { getBugsForPlayground } from "@/lib/bugs";
 
+// BUG PERF-001: Product images served without optimization causing LCP > 4s
+// BUG PERF-002: Product list endpoint has artificial 2-3s delay
+// BUG PERF-003: Product grid causes Cumulative Layout Shift (CLS) on load
+// BUG PERF-004: Dashboard component creates a setInterval that never clears on unmount
+// BUG PERF-005: Below-fold product images are not lazy loaded
+// BUG PERF-006: Reports endpoint recalculates all metrics on every request with no caching
+// BUG PERF-007: First Input Delay (FID) caused by large synchronous JS on mount
+
 const METRIC_ROWS = [
   { metric: "LCP", target: "≤ 2.5s", test: "Largest Contentful Paint" },
   { metric: "CLS", target: "≤ 0.1", test: "Cumulative Layout Shift" },
