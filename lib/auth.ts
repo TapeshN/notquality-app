@@ -4,6 +4,17 @@ import { prisma } from "@/lib/db";
 
 const isProd = process.env.NODE_ENV === "production";
 
+function githubContactEmail(profile: {
+  id: string | number;
+  login: string;
+  email?: string | null;
+}) {
+  const trimmed =
+    typeof profile.email === "string" ? profile.email.trim() : "";
+  if (trimmed) return trimmed;
+  return `${String(profile.id)}+${profile.login}@users.noreply.github.com`;
+}
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
   trustHost: true,
   secret: process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET,
@@ -21,18 +32,28 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
   callbacks: {
     async signIn({ profile }) {
-      if (!profile?.login || !profile?.email) return false;
+      if (
+        !profile?.login ||
+        profile.id === undefined ||
+        profile.id === null
+      ) {
+        return false;
+      }
+
+      const email = githubContactEmail(
+        profile as { id: string | number; login: string; email?: string | null },
+      );
 
       await prisma.platformUser.upsert({
         where: { githubId: String(profile.id) },
         update: {
-          email: profile.email as string,
+          email,
           username: profile.login as string,
           avatarUrl: (profile.avatar_url as string) ?? null,
         },
         create: {
           githubId: String(profile.id),
-          email: profile.email as string,
+          email,
           username: profile.login as string,
           avatarUrl: (profile.avatar_url as string) ?? null,
         },
