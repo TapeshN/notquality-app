@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import type { Product } from "@/types";
 
@@ -12,30 +13,34 @@ export default function ProductDetailView({ productId }: Props) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function loadProduct() {
-      const response = await fetch(`/api/products/${productId}`, { cache: "no-store" });
-      if (!response.ok) {
+    queueMicrotask(() => {
+      async function loadProduct() {
+        const response = await fetch(`/api/products/${productId}`, {
+          cache: "no-store",
+        });
+        if (!response.ok) {
+          setLoading(false);
+          return;
+        }
+
+        const data = (await response.json()) as Product;
+        setProduct(data);
         setLoading(false);
-        return;
+
+        await fetch("/api/events", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            type: "PRODUCT_VIEWED",
+            // BUG EVT-002: PRODUCT_VIEWED events may omit productId in downstream event records.
+            productId,
+            metadata: { location: "legacy-product-detail" },
+          }),
+        });
       }
 
-      const data = (await response.json()) as Product;
-      setProduct(data);
-      setLoading(false);
-
-      await fetch("/api/events", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          type: "PRODUCT_VIEWED",
-          // BUG EVT-002: PRODUCT_VIEWED events may omit productId in downstream event records.
-          productId,
-          metadata: { location: "legacy-product-detail" },
-        }),
-      });
-    }
-
-    void loadProduct();
+      void loadProduct();
+    });
   }, [productId]);
 
   async function addToCart() {
@@ -61,12 +66,16 @@ export default function ProductDetailView({ productId }: Props) {
         {product.name}
       </h1>
       {/* BUG LG-004: detail image renders with missing alt text. */}
-      <img
-        src={product.imageUrl ?? ""}
-        alt=""
-        className="mb-4 h-64 w-full rounded-md object-cover bg-zinc-800"
-        data-testid="detail-image"
-      />
+      <div className="relative mb-4 h-64 w-full overflow-hidden rounded-md bg-zinc-800">
+        <Image
+          src={product.imageUrl ?? ""}
+          alt=""
+          fill
+          sizes="(max-width: 768px) 100vw, 896px"
+          className="object-cover"
+          data-testid="detail-image"
+        />
+      </div>
       <p className="mb-2 text-zinc-300" data-testid="detail-description">
         {product.description}
       </p>

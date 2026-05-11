@@ -13,6 +13,7 @@ export async function GET(
   }
 
   // Never expose bugIds — that is the answer key
-  const { bugIds: _, ...publicChallenge } = challenge;
+  const { bugIds, ...publicChallenge } = challenge;
+  void bugIds;
   return NextResponse.json(publicChallenge);
 }

@@ -1,22 +1,18 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { Suspense, useState } from "react";
+import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const searchParams = useSearchParams();
+  const [email, setEmail] = useState(() => searchParams.get("email") ?? "");
+  const [password, setPassword] = useState(
+    () => searchParams.get("password") ?? ""
+  );
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
-    const prefillEmail = searchParams.get("email");
-    const prefillPassword = searchParams.get("password");
-    if (prefillEmail) setEmail(prefillEmail);
-    if (prefillPassword) setPassword(prefillPassword);
-  }, []);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -121,11 +117,25 @@ export default function LoginPage() {
         </form>
 
         <p className="mt-6 text-center text-xs text-zinc-500">
-          <a href="/" className="hover:text-zinc-300 transition-colors">
+          <Link href="/" className="hover:text-zinc-300 transition-colors">
             ← Back to playground selector
-          </a>
+          </Link>
         </p>
       </div>
     </main>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="min-h-screen bg-zinc-950 flex items-center justify-center px-4">
+          <p className="text-sm text-zinc-400">Loading...</p>
+        </main>
+      }
+    >
+      <LoginForm />
+    </Suspense>
   );
 }

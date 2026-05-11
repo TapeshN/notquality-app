@@ -1,3 +1,4 @@
+import Link from "next/link";
 import AuthButton from "@/components/auth/AuthButton";
 import type { PlaygroundId } from "@/types";
 
@@ -26,12 +27,12 @@ export default function PlaygroundShell({ playground, children }: Props) {
         data-testid="playground-nav"
       >
         <div className="flex items-center gap-3">
-          <a
+          <Link
             href="/"
             className="text-sm font-bold text-zinc-400 hover:text-white transition-colors"
           >
             notquality
-          </a>
+          </Link>
           <span className="text-zinc-700">/</span>
           <span
             className="text-sm font-medium text-white"

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { PLAYGROUND_ACCOUNTS } from "@/lib/accounts";
 import { getRandomHomepageBugId } from "@/lib/bugs";
 import AuthButton from "@/components/auth/AuthButton";
@@ -16,13 +17,13 @@ export default function HomePage() {
           notquality<span className="text-zinc-600">.com</span>
         </span>
         <div className="flex items-center gap-4">
-          <a
+          <Link
             href="/challenges"
             className="text-sm text-zinc-400 hover:text-white transition-colors"
             data-testid="nav-challenges"
           >
             Challenges
-          </a>
+          </Link>
           <AuthButton />
         </div>
       </header>

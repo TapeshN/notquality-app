@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { FormEvent, useEffect, useState } from "react";
 import type { Product } from "@/types";
@@ -31,12 +32,15 @@ export default function ProductsView() {
   }
 
   useEffect(() => {
-    const persistedCategory = window.sessionStorage.getItem("legacy-category-filter") ?? "";
-    if (persistedCategory) {
-      setCategoryValue(persistedCategory);
-      // BUG LG-005: filter UI is restored on back-navigation, but results are fetched unfiltered.
-    }
-    void fetchProducts("", "");
+    queueMicrotask(() => {
+      const persistedCategory =
+        window.sessionStorage.getItem("legacy-category-filter") ?? "";
+      if (persistedCategory) {
+        setCategoryValue(persistedCategory);
+        // BUG LG-005: filter UI is restored on back-navigation, but results are fetched unfiltered.
+      }
+      void fetchProducts("", "");
+    });
   }, []);
 
   async function handleSearchSubmit(event: FormEvent<HTMLFormElement>) {
@@ -115,12 +119,16 @@ export default function ProductsView() {
           >
             <Link href={`/playgrounds/legacy/products/${product.id}`} className="block">
               {/* BUG LG-004: product image is missing meaningful alt text. */}
-              <img
-                src={product.imageUrl ?? ""}
-                alt=""
-                className="mb-3 h-40 w-full rounded-md object-cover bg-zinc-800"
-                data-testid="product-image"
-              />
+              <div className="relative mb-3 h-40 w-full overflow-hidden rounded-md bg-zinc-800">
+                <Image
+                  src={product.imageUrl ?? ""}
+                  alt=""
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 33vw"
+                  className="object-cover"
+                  data-testid="product-image"
+                />
+              </div>
               <h2 className="text-lg font-semibold text-white" data-testid="product-name">
                 {product.name}
               </h2>

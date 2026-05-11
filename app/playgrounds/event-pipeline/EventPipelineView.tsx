@@ -56,7 +56,10 @@ export default function EventPipelineView() {
   }
 
   useEffect(() => {
-    void refreshAll("");
+    queueMicrotask(() => {
+      void refreshAll("");
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- mount-only bootstrap
   }, []);
 
   async function applyFilter(type: string) {

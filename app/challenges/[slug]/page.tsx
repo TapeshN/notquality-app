@@ -62,14 +62,14 @@ function BugReportGuide() {
             <p className="text-zinc-300 font-medium mb-1">Description</p>
             <p>Be specific. Include the component name and what is wrong.</p>
             <p className="font-mono text-xs bg-zinc-800 px-2 py-1 rounded mt-1">
-              Example: "Add to Cart button on product listing has no aria-label"
+              Example: &quot;Add to Cart button on product listing has no aria-label&quot;
             </p>
           </div>
           <div>
             <p className="text-zinc-300 font-medium mb-1">Steps to reproduce</p>
             <p>Number your steps. Start from a clean state.</p>
             <p className="font-mono text-xs bg-zinc-800 px-2 py-1 rounded mt-1">
-              Example: "1. Go to /playgrounds/legacy/products 2. Observe the Add buttons 3. Inspect with screen reader"
+              Example: &quot;1. Go to /playgrounds/legacy/products 2. Observe the Add buttons 3. Inspect with screen reader&quot;
             </p>
           </div>
           <div>
