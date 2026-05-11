@@ -1,3 +1,4 @@
+import AuthButton from "@/components/auth/AuthButton";
 import type { PlaygroundId } from "@/types";
 
 const LABELS: Record<PlaygroundId, string> = {
@@ -47,6 +48,8 @@ export default function PlaygroundShell({ playground, children }: Props) {
           >
             {playground}
           </span>
+          <AuthButton />
+          <span className="text-zinc-800 hidden sm:block">|</span>
           <LogoutButton />
         </div>
       </nav>
@@ -64,7 +67,7 @@ function LogoutButton() {
         data-testid="logout-btn"
         className="text-xs text-zinc-500 hover:text-zinc-300 transition-colors"
       >
-        Sign out
+        ← Exit Lab
       </button>
     </form>
   );

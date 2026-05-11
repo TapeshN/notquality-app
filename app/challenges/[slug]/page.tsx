@@ -41,6 +41,51 @@ const EMPTY_SUBMISSION: BugSubmissionInput = {
   severity: "medium",
 };
 
+function BugReportGuide() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="rounded-lg border border-zinc-800 bg-zinc-900/50">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        className="w-full flex items-center justify-between px-4 py-3 text-sm text-zinc-400 hover:text-white transition-colors"
+        data-testid="bug-guide-toggle"
+      >
+        <span>📋 How to write a good bug report</span>
+        <span>{open ? "▲" : "▼"}</span>
+      </button>
+
+      {open && (
+        <div className="px-4 pb-4 space-y-3 text-sm text-zinc-400 border-t border-zinc-800 pt-3">
+          <div>
+            <p className="text-zinc-300 font-medium mb-1">Description</p>
+            <p>Be specific. Include the component name and what is wrong.</p>
+            <p className="font-mono text-xs bg-zinc-800 px-2 py-1 rounded mt-1">
+              Example: "Add to Cart button on product listing has no aria-label"
+            </p>
+          </div>
+          <div>
+            <p className="text-zinc-300 font-medium mb-1">Steps to reproduce</p>
+            <p>Number your steps. Start from a clean state.</p>
+            <p className="font-mono text-xs bg-zinc-800 px-2 py-1 rounded mt-1">
+              Example: "1. Go to /playgrounds/legacy/products 2. Observe the Add buttons 3. Inspect with screen reader"
+            </p>
+          </div>
+          <div>
+            <p className="text-zinc-300 font-medium mb-1">Severity</p>
+            <ul className="space-y-1 text-xs">
+              <li><span className="text-red-400 font-medium">High</span> — blocks a user flow or causes data loss</li>
+              <li><span className="text-yellow-400 font-medium">Medium</span> — degrades experience, workaround exists</li>
+              <li><span className="text-zinc-400 font-medium">Low</span> — cosmetic or minor UX issue</li>
+            </ul>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function ChallengeDetailPage({
   params,
 }: {
@@ -173,6 +218,8 @@ export default function ChallengeDetailPage({
       </section>
 
       <section className="space-y-4">
+        <BugReportGuide />
+
         {submissions.map((submission, index) => (
           <div
             key={`submission-${index}`}
@@ -231,22 +278,87 @@ export default function ChallengeDetailPage({
         {error && <p className="text-sm text-red-400">{error}</p>}
 
         {result && (
-          <div className="space-y-3 rounded-lg border border-zinc-800 bg-zinc-900 p-4">
-            <p className="text-lg font-semibold" data-testid="score-result">
-              Score: {result.score}% ({result.totalScore}/{result.maxScore})
-            </p>
+          <div
+            className="space-y-5 rounded-lg border border-zinc-800 bg-zinc-900 p-5"
+            data-testid="score-result"
+          >
+            {/* Overall score */}
+            <div>
+              <p className="text-2xl font-bold">
+                {result.score}%
+                <span className="text-sm font-normal text-zinc-400 ml-2">
+                  ({result.totalScore} / {result.maxScore} points)
+                </span>
+              </p>
+              <div className="mt-2 h-2 w-full rounded-full bg-zinc-800">
+                <div
+                  className="h-2 rounded-full bg-blue-500 transition-all"
+                  style={{ width: `${result.score}%` }}
+                />
+              </div>
+            </div>
+
+            {/* Severity breakdown */}
+            <div className="space-y-2">
+              {(["high", "medium", "low"] as const).map((sev) => {
+                const sevBugs = result.feedback.filter((f) => f.severity === sev);
+                if (sevBugs.length === 0) return null;
+                const found = sevBugs.filter((f) => f.matched).length;
+                const total = sevBugs.length;
+                const pct = Math.round((found / total) * 100);
+                const colors = {
+                  high: "bg-red-500",
+                  medium: "bg-yellow-500",
+                  low: "bg-zinc-500",
+                };
+                return (
+                  <div key={sev} data-testid={`severity-row-${sev}`}>
+                    <div className="flex justify-between text-xs text-zinc-400 mb-1">
+                      <span className="capitalize">{sev} severity</span>
+                      <span>{found} / {total}</span>
+                    </div>
+                    <div className="h-1.5 w-full rounded-full bg-zinc-800">
+                      <div
+                        className={`h-1.5 rounded-full ${colors[sev]}`}
+                        style={{ width: `${pct}%` }}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Per-bug feedback */}
             <ul className="space-y-2 text-sm" data-testid="feedback-list">
               {result.feedback.map((item) => (
                 <li
                   key={item.bugId}
-                  className="rounded border border-zinc-800 px-3 py-2"
+                  className={`rounded border px-3 py-2 ${
+                    item.matched
+                      ? "border-zinc-700 bg-zinc-800"
+                      : "border-red-900/50 bg-red-950/20"
+                  }`}
                 >
-                  <div className="font-medium">
-                    {item.bugId} - {item.matched ? "Matched" : "Missed"}
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-xs text-zinc-500">{item.bugId}</span>
+                    <div className="flex items-center gap-2">
+                      {item.severity && (
+                        <span className={`text-xs px-1.5 py-0.5 rounded font-medium ${
+                          item.severity === "high"
+                            ? "bg-red-900/50 text-red-400"
+                            : item.severity === "medium"
+                            ? "bg-yellow-900/50 text-yellow-400"
+                            : "bg-zinc-800 text-zinc-400"
+                        }`}>
+                          {item.severity}
+                        </span>
+                      )}
+                      <span className={`text-xs font-medium ${item.matched ? "text-green-400" : "text-red-400"}`}>
+                        {item.matched ? "Found" : "Missed"}
+                      </span>
+                    </div>
                   </div>
-                  <div className="text-zinc-400">
-                    {item.description} {item.severity ? `(${item.severity})` : ""}
-                  </div>
+                  <p className="text-zinc-300 mt-1">{item.description}</p>
                 </li>
               ))}
             </ul>
