@@ -1,3 +1,5 @@
+import Link from "next/link";
+import AuthButton from "@/components/auth/AuthButton";
 import type { PlaygroundId } from "@/types";
 
 const LABELS: Record<PlaygroundId, string> = {
@@ -25,12 +27,12 @@ export default function PlaygroundShell({ playground, children }: Props) {
         data-testid="playground-nav"
       >
         <div className="flex items-center gap-3">
-          <a
+          <Link
             href="/"
             className="text-sm font-bold text-zinc-400 hover:text-white transition-colors"
           >
             notquality
-          </a>
+          </Link>
           <span className="text-zinc-700">/</span>
           <span
             className="text-sm font-medium text-white"
@@ -47,6 +49,8 @@ export default function PlaygroundShell({ playground, children }: Props) {
           >
             {playground}
           </span>
+          <AuthButton />
+          <span className="text-zinc-800 hidden sm:block">|</span>
           <LogoutButton />
         </div>
       </nav>
@@ -64,7 +68,7 @@ function LogoutButton() {
         data-testid="logout-btn"
         className="text-xs text-zinc-500 hover:text-zinc-300 transition-colors"
       >
-        Sign out
+        ← Exit Lab
       </button>
     </form>
   );

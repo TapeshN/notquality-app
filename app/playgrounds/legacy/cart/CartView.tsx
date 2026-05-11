@@ -23,7 +23,9 @@ export default function CartView() {
   }
 
   useEffect(() => {
-    void loadCart();
+    queueMicrotask(() => {
+      void loadCart();
+    });
   }, []);
 
   async function updateQuantity(id: string, quantity: number) {

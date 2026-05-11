@@ -16,7 +16,9 @@ export default function OrdersView() {
   }
 
   useEffect(() => {
-    void loadOrders();
+    queueMicrotask(() => {
+      void loadOrders();
+    });
   }, []);
 
   const sortedOrders = useMemo(() => {

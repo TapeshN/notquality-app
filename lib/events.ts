@@ -1,5 +1,4 @@
 import { prisma } from "@/lib/db";
-import type { Prisma } from "@prisma/client";
 import type { EventType } from "@/types";
 
 interface EmitEventParams {
@@ -8,10 +7,16 @@ interface EmitEventParams {
   productId?: string;
   cartId?: string;
   orderId?: string;
-  metadata?: Prisma.InputJsonValue;
+  /** JSON-serializable value for `AppEvent.metadata` (Prisma `Json`). */
+  metadata?: unknown;
 }
 
 export async function emitEvent(params: EmitEventParams) {
+  const metadata =
+    params.metadata === undefined || params.metadata === null
+      ? {}
+      : JSON.parse(JSON.stringify(params.metadata));
+
   return prisma.appEvent.create({
     data: {
       userId: params.userId,
@@ -19,7 +24,7 @@ export async function emitEvent(params: EmitEventParams) {
       productId: params.productId,
       cartId: params.cartId,
       orderId: params.orderId,
-      metadata: params.metadata ?? {},
+      metadata,
       // BUG EVT-003: timestamp handling is expected to surface timezone inconsistencies in validations.
       timestamp: new Date(),
     },

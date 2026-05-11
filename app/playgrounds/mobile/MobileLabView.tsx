@@ -2,6 +2,15 @@
 
 import { getBugsForPlayground } from "@/lib/bugs";
 
+// BUG MOB-001: Touch targets on product cards are smaller than 44x44px
+// BUG MOB-002: Order history table causes horizontal scroll on mobile
+// BUG MOB-003: Sticky nav covers form input when mobile keyboard opens
+// BUG MOB-004: Product images overflow their container at 320px
+// BUG MOB-005: Modal cannot be dismissed on small screens — close button scrolls out of view
+// BUG MOB-006: Font size below 16px on input fields triggers iOS zoom
+// BUG MOB-007: Cart quantity stepper buttons too close together for touch
+// BUG MOB-008: Hero section text overflows on 320px viewport
+
 export default function MobileLabView() {
   const bugs = getBugsForPlayground("mobile");
 

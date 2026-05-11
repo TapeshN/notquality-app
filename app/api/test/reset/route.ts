@@ -65,7 +65,7 @@ async function resetPlaygroundData(playground: PlaygroundId) {
     where: { playground },
     select: { id: true },
   });
-  const userIds = users.map((user) => user.id);
+  const userIds = users.map((user: { id: string }) => user.id);
 
   if (userIds.length === 0) {
     return {
@@ -86,7 +86,7 @@ async function resetPlaygroundData(playground: PlaygroundId) {
     where: { userId: { in: userIds } },
     select: { id: true },
   });
-  const orderIds = orders.map((order) => order.id);
+  const orderIds = orders.map((order: { id: string }) => order.id);
 
   if (orderIds.length > 0) {
     await prisma.orderItem.deleteMany({ where: { orderId: { in: orderIds } } });
@@ -99,7 +99,7 @@ async function resetPlaygroundData(playground: PlaygroundId) {
     where: { userId: { in: userIds } },
     select: { id: true },
   });
-  const cartIds = carts.map((cart) => cart.id);
+  const cartIds = carts.map((cart: { id: string }) => cart.id);
 
   if (cartIds.length > 0) {
     await prisma.cartItem.deleteMany({ where: { cartId: { in: cartIds } } });
