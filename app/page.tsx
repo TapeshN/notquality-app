@@ -1,5 +1,6 @@
 import { PLAYGROUND_ACCOUNTS } from "@/lib/accounts";
 import { getRandomHomepageBugId } from "@/lib/bugs";
+import AuthButton from "@/components/auth/AuthButton";
 import CredentialCard from "@/components/landing/CredentialCard";
 import HomepageBugOverlay from "@/components/landing/HomepageBugOverlay";
 
@@ -10,6 +11,21 @@ export default function HomePage() {
   return (
     <main className="min-h-screen bg-zinc-950 text-white">
       <HomepageBugOverlay bugId={activeBugId} />
+      <header className="flex items-center justify-between px-6 py-4 border-b border-zinc-900">
+        <span className="text-sm font-semibold text-zinc-400 tracking-tight">
+          notquality<span className="text-zinc-600">.com</span>
+        </span>
+        <div className="flex items-center gap-4">
+          <a
+            href="/challenges"
+            className="text-sm text-zinc-400 hover:text-white transition-colors"
+            data-testid="nav-challenges"
+          >
+            Challenges
+          </a>
+          <AuthButton />
+        </div>
+      </header>
 
       {/* Hero */}
       <section className="px-6 pt-20 pb-12 text-center max-w-3xl mx-auto">

@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/db";
 import Link from "next/link";
-import { SignInButton } from "@/components/auth/SignInButton";
+import AuthButton from "@/components/auth/AuthButton";
 
 export const dynamic = "force-dynamic";
 
@@ -12,6 +12,9 @@ export default async function ChallengesPage() {
 
   return (
     <main className="min-h-screen bg-zinc-950 text-white px-6 py-12 max-w-3xl mx-auto">
+      <div className="mb-8 flex justify-end">
+        <AuthButton />
+      </div>
       <h1 className="text-3xl font-bold mb-2" data-testid="challenges-heading">
         Challenges
       </h1>
@@ -19,9 +22,6 @@ export default async function ChallengesPage() {
         Practice real-world QA skills against a live, intentionally broken
         system.
       </p>
-      <div className="mb-10">
-        <SignInButton />
-      </div>
       <div className="space-y-4" data-testid="challenge-list">
         {challenges.map((challenge) => (
           <Link
